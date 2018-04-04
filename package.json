@@ -1,0 +1,30 @@
+{
+  "name": "traveller",
+  "version": "1.0.0",
+  "description": "Traveller forum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tianbatua/Traveller.git"
+  },
+  "keywords": [
+    "travel",
+    "outdoor"
+  ],
+  "author": "Mingcan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tianbatua/Traveller/issues"
+  },
+  "homepage": "https://github.com/Tianbatua/Traveller#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.7.3"
+  }
+}
