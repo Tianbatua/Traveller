@@ -1,0 +1,47 @@
+<h1 class="page-header">Register Page</h1>
+
+<form class="form-signup" [formGroup]="form" (submit)="onRegisterSubmit()" >
+  <div class="form-group">
+	  <label for="username" class="sr-only">Username</label>
+	  <input type="text" name="username" class="form-control" placeholder="Username" formControlName="username" autofocus [ngClass]="{'is-invalid': (form.controls.username.errors && form.controls.username.dirty), 'is-valid': !form.controls.username.errors}">
+		<ul class="form-text text-muted">
+	  	<li *ngIf=" form.controls.username.errors?.required && form.controls.username.dirty">This field is required</li>
+	  	<li *ngIf=" form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength && form.controls.username.dirty">Minimum characters: 3, Maximum characters: 15</li>
+	  	<li *ngIf=" form.controls.username.errors?.validateEmail && form.controls.username.dirty">Username must not have any special characters</li>
+	  </ul>
+	</div>
+	<div class="form-group">
+	  <label for="email" class="sr-only">Email address</label>
+	  <input type="email" name="email" class="form-control" placeholder="Email address" formControlName="email" [ngClass]="{'is-invalid': (form.controls.email.errors && form.controls.email.dirty), 'is-valid': !form.controls.email.errors}">
+	  <ul class="form-text text-muted">
+	  	<li *ngIf=" form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
+	  	<li *ngIf=" form.controls.email.errors?.minlength || form.controls.email.errors?.maxlength && form.controls.email.dirty">Minimum characters: 5, Maximum characters: 30</li>
+	  	<li *ngIf=" form.controls.email.errors?.validateEmail && form.controls.email.dirty">Please input valid email</li>
+	  </ul>
+	</div>
+	<div class="form-group">
+	  <label for="password" class="sr-only">Password</label>
+	  <input type="password" name="password" class="form-control" placeholder="Password" formControlName="password"  [ngClass]="{'is-invalid': (form.controls.password.errors && form.controls.password.dirty), 'is-valid': !form.controls.password.errors}">
+	  <ul class="form-text text-muted">
+	  	<li *ngIf=" form.controls.password.errors?.required && form.controls.password.dirty">This field is required</li>
+	  	<li *ngIf=" form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength && form.controls.password.dirty">Minimum characters: 8, Maximum characters: 35</li>
+	  	<li *ngIf=" form.controls.password.errors?.validatePassword && form.controls.password.dirty">Must have at least one uppercase, lowercase, special character, and number</li>
+	  </ul>
+	</div>
+	<div class="form-group">
+	  <label for="confirm" class="sr-only">Confirm Password</label>
+	  <input type="password" name="confirm" class="form-control" placeholder="Confirm Password" formControlName="confirm"  [ngClass]="{'is-invalid': (form.controls.confirm.errors && form.controls.confirm.dirty) || (form.errors?.matchingPasswords && form.controls.confirm.dirty), 'is-valid': !form.controls.confirm.errors && !form.errors?.matchingPasswords}">
+	  <ul class="form-text text-muted">
+	  	<li *ngIf=" form.controls.confirm.errors?.required && form.controls.confirm.dirty">This field is required</li>
+	  	<li *ngIf=" form.errors?.matchingPasswords && form.controls.confirm.dirty">Password do not match</li>
+	  </ul>
+	</div>
+
+  <button [disabled]="!form.valid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>
+
+
+<!-- <p>Username: {{form.controls.username.value}}</p>
+<p>email: {{form.controls.email.value}}</p>
+<p>password: {{form.controls.password.value}}</p> -->
