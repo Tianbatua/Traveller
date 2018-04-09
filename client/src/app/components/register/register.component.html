@@ -1,22 +1,30 @@
 <h1 class="page-header">Register Page</h1>
 
+<div class="show-hide-message">
+	<div [ngClass]='messageClass'>
+		{{ message }}
+	</div>
+</div>
+
 <form class="form-signup" [formGroup]="form" (submit)="onRegisterSubmit()" >
   <div class="form-group">
 	  <label for="username" class="sr-only">Username</label>
-	  <input type="text" name="username" class="form-control" placeholder="Username" formControlName="username" autofocus [ngClass]="{'is-invalid': (form.controls.username.errors && form.controls.username.dirty), 'is-valid': !form.controls.username.errors}">
+	  <input type="text" name="username" class="form-control" placeholder="Username" formControlName="username" autofocus [ngClass]="{'is-invalid': (form.controls.username.errors && form.controls.username.dirty) || (!usernameValid && form.controls.username.dirty) , 'is-valid': !form.controls.username.errors && usernameValid}" (blur)="checkUsername()">
 		<ul class="form-text text-muted">
 	  	<li *ngIf=" form.controls.username.errors?.required && form.controls.username.dirty">This field is required</li>
 	  	<li *ngIf=" form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength && form.controls.username.dirty">Minimum characters: 3, Maximum characters: 15</li>
 	  	<li *ngIf=" form.controls.username.errors?.validateEmail && form.controls.username.dirty">Username must not have any special characters</li>
+	  	<li *ngIf="usernameMessage" >{{usernameMessage}}</li>
 	  </ul>
 	</div>
 	<div class="form-group">
 	  <label for="email" class="sr-only">Email address</label>
-	  <input type="email" name="email" class="form-control" placeholder="Email address" formControlName="email" [ngClass]="{'is-invalid': (form.controls.email.errors && form.controls.email.dirty), 'is-valid': !form.controls.email.errors}">
+	  <input type="email" name="email" class="form-control" placeholder="Email address" formControlName="email" [ngClass]="{'is-invalid': (form.controls.email.errors && form.controls.email.dirty) || (!emailValid && form.controls.email.dirty), 'is-valid': !form.controls.email.errors && emailValid}" (blur)="checkEmail()">
 	  <ul class="form-text text-muted">
 	  	<li *ngIf=" form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
 	  	<li *ngIf=" form.controls.email.errors?.minlength || form.controls.email.errors?.maxlength && form.controls.email.dirty">Minimum characters: 5, Maximum characters: 30</li>
 	  	<li *ngIf=" form.controls.email.errors?.validateEmail && form.controls.email.dirty">Please input valid email</li>
+	  	<li *ngIf="emailMessage" >{{emailMessage}}</li>
 	  </ul>
 	</div>
 	<div class="form-group">
@@ -37,7 +45,7 @@
 	  </ul>
 	</div>
 
-  <button [disabled]="!form.valid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  <button [disabled]="!form.valid || processing || !emailValid || !usernameValid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
 

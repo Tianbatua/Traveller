@@ -6,6 +6,7 @@ const config = require('./config/database'); //monggose config
 const path = require('path'); //package for file paths
 const authentication = require('./routes/authentication')(router);
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 // Database Connection
@@ -18,13 +19,13 @@ mongoose.connect(config.uri, (err) => {
 	}
 });
 
-// Provide static directory for frontend
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false })); 
-// parse application/json
-app.use(bodyParser.json());
-
-app.use(express.static(__dirname + '/client/dist/'));
+// Middleware
+app.use(cors({
+	origin: 'http://localhost:4200'
+}));
+app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+app.use(express.static(__dirname + '/client/dist/')); //Provide static directory for frontend
 app.use('/authentication', authentication);
 
 // Connect server to Angular Index.html
