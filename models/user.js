@@ -108,20 +108,26 @@ const userSchema = new Schema({
   password: { type: String, require: true, validate: passwordValidators}
 });
 
+// Schema Middleware to Encrypt password
 userSchema.pre('save', function(next){
+  // Ensure password is new or modified before applying encryption
   if(!this.isModified('password'))
     return next();
 
+  // Apply encryption
   bcrypt.hash(this.password, null, null, (err, hash) => {
     if(err) 
-      return next(err);
-    this.password = hash;
-    next();
+      return next(err); // Ensure no err
+    this.password = hash; //Apply encryption to password
+    next(); //Exit middleware
   });
 });
 
-userSchema.methods.comparePassword = (password) => {
-  return bcrypt.compareSync(password, this.password);
+
+// Methods to compare password to encrypted password upon Login
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password); // Return comparison of login password to password in database
 };
 
+// Export Module/Schema
 module.exports = mongoose.model('User', userSchema);
