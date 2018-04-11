@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
-@Injectable()
+@Injectable()  
 export class AuthService {
 
 	domain = "http://localhost:8080"; // Development Domain - Not needed in production
@@ -64,6 +65,12 @@ export class AuthService {
   getProfile(){
     this.createAuthenticationHeaders();
     return this.http.get(this.domain + '/authentication/profile', this.options);
+  }
+
+  loggedInExpired(){
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    const token = localStorage.getItem('token');
+    return jwtHelper.isTokenExpired(token);
   }
 
 }

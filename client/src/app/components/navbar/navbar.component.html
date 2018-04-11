@@ -8,24 +8,21 @@
             <li class="nav-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a [routerLink]="['/home']" class="nav-link">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <!-- <li class="nav-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-                <a [routerLink]="['/home']" class="nav-link">Home</a>
-            </li> -->
-            <li class="nav-item">
+            <li *ngIf="authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" [routerLink]="['/login']">Login</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" [routerLink]="['/profile']">Profile</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" [routerLink]="['/register']">Register</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" href="#" (click)="onLogoutClick()" >Logout</a>
             </li>
         </ul>
