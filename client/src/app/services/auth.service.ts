@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()  
 export class AuthService {
@@ -9,7 +9,6 @@ export class AuthService {
   authToken;
   user;
   options;
-
 
   constructor(
   	private http: HttpClient,
@@ -25,8 +24,9 @@ export class AuthService {
     };
   }
 
+  // Function to get token from client local storage
   loadToken(){
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); // Get token and asssign to variable to be used elsewhere
     this.authToken = token;
   }
 
@@ -54,7 +54,8 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
   }
-
+  
+  // Store user's data in client local storage
   storeUserData(token, user){
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
@@ -62,11 +63,13 @@ export class AuthService {
     this.user = user;
   }
 
+  // Get user's profile data
   getProfile(){
     this.createAuthenticationHeaders();
     return this.http.get(this.domain + '/authentication/profile', this.options);
   }
 
+  // Check if user's loggin expiered
   loggedInExpired(){
     const jwtHelper: JwtHelperService = new JwtHelperService();
     const token = localStorage.getItem('token');
